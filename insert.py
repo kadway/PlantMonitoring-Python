@@ -1,9 +1,10 @@
 #!/usr/bin/python
  
 import psycopg2
+from datetime import datetime as timestamp
 from config import config
  
-def insert_data(sensor_id, value):
+def insert_data(sensor_id, alias, voltage, percent):
 	conn = None
 	vendor_id = None
 	try:
@@ -14,7 +15,9 @@ def insert_data(sensor_id, value):
 		# create a new cursor
 		cur = conn.cursor()
 		# execute the INSERT statement
-		cur.execute('INSERT INTO people VALUES (%d, %f)' % (sensor_id, value))
+		# {:%Y-%m-%d %H:%M:%S}
+		time=timestamp.now()
+		cur.execute("INSERT INTO soil VALUES (%s,%s,%s,%s,%s);", (time,sensor_id,alias,voltage,percent))	
 		# commit the changes to the database
 		conn.commit()
 		#print added values

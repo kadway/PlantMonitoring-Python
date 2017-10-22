@@ -21,8 +21,10 @@ def openSerial (port,baud,bytesize,parity,stopbits,timeout,xonxoff,rtscts,writet
 				id = int.from_bytes(ser.read(1), byteorder='big', signed=False)
 				val = ser.read(2)
 				volt = val[0] + val[1]*256
-				volt = (float(volt)/1024)*5		
-				insert_data(id, volt)
+				volt = (float(volt)/1024)*5
+				percent = volt*100/5
+				percent=float(str(round(percent, 0)))		
+				insert_data(id, "sensor", volt, percent)
 				#print("sensor ", id, ": ", volt, "V")        
 		#ser.close()             # close port
 		#print ("port closed")

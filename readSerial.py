@@ -7,6 +7,10 @@ from insert import insert_data
 
 #-----------------------------------------------------------------------       
 def openSerial (port,baud,bytesize,parity,stopbits,timeout,xonxoff,rtscts,writetimeout,dsrdtr,interchartimeout,message,length):		
+	list = []
+	list.append("Pimento")
+	list.append("Bonsai")
+	list.append("Planta")
 	try:
 		ser = serial.Serial(port,baud,8,parity,stopbits,timeout,xonxoff,rtscts,writetimeout,dsrdtr,interchartimeout)  # open serial port   
 		#ser = serial.Serial('/dev/ttyUSB1',9600, bytesize=8, stopbits=2, timeout=None, xonxoff=0, rtscts=0, dsrdtr=0)		
@@ -24,7 +28,7 @@ def openSerial (port,baud,bytesize,parity,stopbits,timeout,xonxoff,rtscts,writet
 				volt = (float(volt)/1024)*5
 				percent = volt*100/5
 				percent=float(str(round(percent, 0)))		
-				insert_data(id, "sensor", volt, percent)
+				insert_data(id, list[id], volt, percent)
 				#print("sensor ", id, ": ", volt, "V")        
 		#ser.close()             # close port
 		#print ("port closed")
@@ -36,7 +40,7 @@ def openSerial (port,baud,bytesize,parity,stopbits,timeout,xonxoff,rtscts,writet
 def main():
    
 	#raspberrypi
-	openSerial('/dev/ttyUSB1',9600,8,serial.PARITY_NONE,1,2,False,False,2,True,None,'^WHORU$',11)
+	openSerial('/dev/ttyUSB0',9600,8,serial.PARITY_NONE,1,2,False,False,2,True,None,'^WHORU$',11)
 	#windows
 	#openSerial('COM3',9600,8,serial.PARITY_NONE,1,2,False,False,2,True,None,'^WHORU$',11)
 

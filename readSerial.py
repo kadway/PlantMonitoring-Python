@@ -7,10 +7,7 @@ from insert import insert_data
 
 #-----------------------------------------------------------------------       
 def openSerial (port,baud,bytesize,parity,stopbits,timeout,xonxoff,rtscts,writetimeout,dsrdtr,interchartimeout,message,length):		
-	list = []
-	list.append("Pimento")
-	list.append("Bonsai")
-	list.append("Planta")
+	list = ["Pimento", "Bonsai", "Planta"]	
 	try:
 		ser = serial.Serial(port,baud,8,parity,stopbits,timeout,xonxoff,rtscts,writetimeout,dsrdtr,interchartimeout)  # open serial port   
 		#ser = serial.Serial('/dev/ttyUSB1',9600, bytesize=8, stopbits=2, timeout=None, xonxoff=0, rtscts=0, dsrdtr=0)		
@@ -26,10 +23,11 @@ def openSerial (port,baud,bytesize,parity,stopbits,timeout,xonxoff,rtscts,writet
 				val = ser.read(2)
 				volt = val[0] + val[1]*256
 				volt = (float(volt)/1024)*5
-				percent = volt*100/5
-				percent=float(str(round(percent, 0)))		
-				insert_data(id, list[id], volt, percent)
-				#print("sensor ", id, ": ", volt, "V")        
+				percent = 100-(volt*100/5)
+				percent=float(str(round(percent, 1)))
+				volt = float(str(round(volt, 2)))		
+				insert_data(id, list[id], volt, percent)        
+				
 		#ser.close()             # close port
 		#print ("port closed")
 	except serial.SerialException:

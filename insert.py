@@ -3,10 +3,12 @@
 import psycopg2
 from datetime import datetime as timestamp
 from config import config
- 
+
+
 def insert_data(sensor_id, alias, voltage, percent):
 	conn = None
 	vendor_id = None
+	
 	try:
 		# read database configuration
 		params = config()
@@ -17,7 +19,10 @@ def insert_data(sensor_id, alias, voltage, percent):
 		# execute the INSERT statement
 		# {:%Y-%m-%d %H:%M:%S}
 		time=timestamp.now()
-		cur.execute("INSERT INTO soil VALUES (%s,%s,%s,%s,%s);", (time,sensor_id,alias,voltage,percent))	
+		cur.execute("select id from data where id=(select max(id) from data);")
+		result = cur.fetchone()
+		id  = result[0] + 1
+		cur.execute("INSERT INTO data VALUES (%s, %s,%s,%s,%s);", (id, time,alias,voltage,percent))	
 		# commit the changes to the database
 		conn.commit()
 		#print added values

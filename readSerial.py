@@ -7,7 +7,7 @@ from insert import insert_data
 
 #-----------------------------------------------------------------------       
 def openSerial (port,baud,bytesize,parity,stopbits,timeout,xonxoff,rtscts,writetimeout,dsrdtr,interchartimeout,message,length):		
-	list = ["Pimento", "Bonsai", "Planta"]	
+	list = ["Paprika", "Bonsai", "Little plant", "Chili paprikas"]	
 	try:
 		ser = serial.Serial(port,baud,8,parity,stopbits,timeout,xonxoff,rtscts,writetimeout,dsrdtr,interchartimeout)  # open serial port   
 		#ser = serial.Serial('/dev/ttyUSB1',9600, bytesize=8, stopbits=2, timeout=None, xonxoff=0, rtscts=0, dsrdtr=0)		

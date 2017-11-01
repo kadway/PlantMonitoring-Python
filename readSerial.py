@@ -38,7 +38,7 @@ def openSerial (port,baud,bytesize,parity,stopbits,timeout,xonxoff,rtscts,writet
 def main():
    
 	#raspberrypi
-	openSerial('/dev/ttyUSB0',9600,8,serial.PARITY_NONE,1,2,False,False,2,True,None,'^WHORU$',11)
+	openSerial('/dev/ttyUSB1',9600,8,serial.PARITY_NONE,1,2,False,False,2,True,None,'^WHORU$',11)
 	#windows
 	#openSerial('COM3',9600,8,serial.PARITY_NONE,1,2,False,False,2,True,None,'^WHORU$',11)
 

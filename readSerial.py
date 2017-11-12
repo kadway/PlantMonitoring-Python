@@ -3,6 +3,7 @@
 import serial
 import time
 import psycopg2
+import sys
 from insert import insert_data
 
 #-----------------------------------------------------------------------       
@@ -19,6 +20,7 @@ def openSerial (port,baud,bytesize,parity,stopbits,timeout,xonxoff,rtscts,writet
 		while True:
 			s=ser.read(5)
 			if(str(s,"ascii") == 'start'):
+				#print ("new data")
 				id = int.from_bytes(ser.read(1), byteorder='big', signed=False)
 				val = ser.read(2)
 				volt = val[0] + val[1]*256
@@ -36,9 +38,13 @@ def openSerial (port,baud,bytesize,parity,stopbits,timeout,xonxoff,rtscts,writet
    
 #-----------------------------------------------------------------------
 def main():
-   
+	if len(sys.argv)<2:
+		print("need usb port like /dev/ttyUSB0")
+		sys.exit(0)
+	else:
+	   	usb_port=sys.argv[1]
 	#raspberrypi
-	openSerial('/dev/ttyUSB1',9600,8,serial.PARITY_NONE,1,2,False,False,2,True,None,'^WHORU$',11)
+	openSerial(usb_port,9600,8,serial.PARITY_NONE,1,2,False,False,2,True,None,'^WHORU$',11)
 	#windows
 	#openSerial('COM3',9600,8,serial.PARITY_NONE,1,2,False,False,2,True,None,'^WHORU$',11)
 
